@@ -2,16 +2,22 @@ import type { NextPage } from 'next';
 import { Header } from './components/Header';
 import { List } from './components/List';
 import { Map } from './components/Map';
-import { PlaceDetails } from './components/PlaceDetails';
+import { CssBaseline, Grid } from '@mui/material';
 
 const Home: NextPage = () => {
 	return (
-		<div>
+		<>
+			<CssBaseline />
 			<Header />
-			<List />
-			<Map />
-			<PlaceDetails />
-		</div>
+			<Grid container spacing={3} style={{ width: '100%' }}>
+				<Grid item xs={12} md={4}>
+					<List />
+				</Grid>
+				<Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+					<Map />
+				</Grid>
+			</Grid>
+		</>
 	);
 };
 
