@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { Header } from '../components/Header';
 import { List, PlaceType } from '../components/List';
-import { BoundType, Map } from '../components/Map';
+import { BoundType, CoordinateType, Map } from '../components/Map';
 import { Grid } from '@mui/material';
 
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ const Home: NextPage = () => {
 	const [type, setType] = useState('restaurants');
 	const [places, setPlaces] = useState<PlaceType[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
-	const [coordinates, setCoordinates] = useState<LatLngType>();
+	const [coordinates, setCoordinates] = useState<LatLngType | null>(null);
 	const [bounds, setBounds] = useState<BoundType | null>(null);
 
 	// Get User Location
