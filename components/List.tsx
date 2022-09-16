@@ -37,8 +37,10 @@ export type PlaceType = {
 	website: string;
 	awards: Award[];
 	photos: object;
-  cuisine: Cuisine[];
+	cuisine: Cuisine[];
 	location: LatLngType;
+	latitude: number;
+	longitude: number;
 };
 
 export const List = ({ places }: { places: PlaceType[] }) => {

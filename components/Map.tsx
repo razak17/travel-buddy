@@ -2,8 +2,11 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import { Paper, Typography, Rating, useMediaQuery } from '@mui/material';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import Image from 'next/image';
 
+import Marker from './Marker';
 import useStyles from '../styles/Map';
+import mapStyles from '../utility/mapStyles';
 import { PlaceType } from './List';
 import { LatLngType } from '../lib/api';
 
@@ -38,13 +41,14 @@ export type CoordinateType = {
 interface MapProps {
 	coordinates: LatLngType | null;
 	weatherData?: WeatherData;
-	places?: PlaceType[];
+	places: PlaceType[];
 	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType | null>>;
 	setBounds: React.Dispatch<React.SetStateAction<BoundType | null>>;
 	setChildClicked?: React.Dispatch<React.SetStateAction<PlaceType | null>>;
 }
 
-export const Map = ({ coordinates, setCoordinates, setBounds }: MapProps) => {
+export const Map = ({ coordinates, setCoordinates, setBounds, places }: MapProps) => {
+	const matches = useMediaQuery('(min-width:600px)');
 	const { classes } = useStyles();
 
 	const handleChange = (e: CoordinateType) => {
@@ -59,10 +63,40 @@ export const Map = ({ coordinates, setCoordinates, setBounds }: MapProps) => {
 				defaultCenter={coordinates}
 				defaultZoom={14}
 				margin={[50, 50, 50, 50]}
-				options={''}
+				options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
 				onChange={handleChange}
 				onChildClick={''}
-			></GoogleMapReact>
+			>
+				{places.length &&
+					places.map((place, i) => (
+						<Marker
+							className={classes.markerContainer}
+							lat={Number(place.latitude)}
+							lng={Number(place.longitude)}
+							key={i}
+						>
+							{!matches ? (
+								<LocationOnOutlinedIcon color='primary' fontSize='large' />
+							) : (
+								<Paper elevation={3} className={classes.paper}>
+									<Typography variant='subtitle2' gutterBottom>
+										{' '}
+										{place.name}
+									</Typography>
+									<Image
+										className={classes.pointer}
+										src={
+											place.photo
+												? place.photo.images.large.url
+												: 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'
+										}
+									/>
+									<Rating name='read-only' size='small' value={Number(place.rating)} readOnly />
+								</Paper>
+							)}
+						</Marker>
+					))}
+			</GoogleMapReact>
 		</div>
 	);
 };

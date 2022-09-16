@@ -40,7 +40,7 @@ const Home: NextPage = () => {
 					<List places={places} />
 				</Grid>
 				<Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-					<Map coordinates={coordinates} setCoordinates={setCoordinates} setBounds={setBounds} />
+					<Map places={places} coordinates={coordinates} setCoordinates={setCoordinates} setBounds={setBounds} />
 				</Grid>
 			</Grid>
 		</>
