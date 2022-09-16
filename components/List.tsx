@@ -4,7 +4,7 @@ import { PlaceDetails } from './PlaceDetails';
 
 import useStyles from '../styles/List';
 
-export interface Place {
+export type PlaceType = {
 	name: string;
 	numReviews: number;
 	rating: number;
@@ -20,9 +20,9 @@ export interface Place {
 		lat: number;
 		lng: number;
 	};
-}
+};
 
-const List = ({ places }: { places: Place[] }) => {
+export const List = ({ places }: { places: PlaceType[] }) => {
 	const [elRefs, setElRefs] = useState([]);
 	const { classes } = useStyles();
 	const [type, setType] = useState('restaurants');
@@ -63,5 +63,3 @@ const List = ({ places }: { places: Place[] }) => {
 		</div>
 	);
 };
-
-export default List;
