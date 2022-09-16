@@ -4,24 +4,7 @@ import { Paper, Typography, Rating, useMediaQuery } from '@mui/material';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 import useStyles from '../styles/Map';
-
-interface Place {
-	name: string;
-	numReviews: number;
-	rating: number;
-	priceLevel: number;
-	phone: string;
-	address: string;
-	webUrl: string;
-	website: string;
-	awards: object;
-	cuisine: object;
-	photos: object;
-	location: {
-		lat: number;
-		lng: number;
-	};
-}
+import { Place } from './List';
 
 type WeatherData = {
 	temperature: number;
