@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Select from '@mui/material/Select';
@@ -15,12 +15,14 @@ interface ListProps {
 	places: PlaceType[];
 	childClicked: string;
 	isLoading: boolean;
+	type: string;
+	setType: Dispatch<SetStateAction<string>>;
+	rating: number;
+	setRating: Dispatch<SetStateAction<number | undefined>>;
 }
 
-const List = ({ places, childClicked, isLoading }: ListProps) => {
+const List = ({ places, childClicked, isLoading, type, setType, rating, setRating }: ListProps) => {
 	const { classes } = useStyles();
-	const [type, setType] = useState('restaurants');
-	const [rating, setRating] = useState('');
 	const placeRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -42,7 +44,12 @@ const List = ({ places, childClicked, isLoading }: ListProps) => {
 					</FormControl>
 					<FormControl className={classes.formControl}>
 						<InputLabel id='rating'>Rating</InputLabel>
-						<Select id='rating' label='Rating' value={rating} onChange={(e) => setRating(e.target.value)}>
+						<Select
+							id='rating'
+							label='Rating'
+							value={rating}
+							onChange={(e) => setRating(e.target.value as number)}
+						>
 							<MenuItem value=''>All</MenuItem>
 							<MenuItem value='3'>Above 3.0</MenuItem>
 							<MenuItem value='4'>Above 4.0</MenuItem>

@@ -1,22 +1,24 @@
 import type { NextPage } from 'next';
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
 import Header from '../components/Header';
 import List from '../components/List';
 import Map from '../components/Map';
 import { getPlacesData } from '../lib/api';
 import { BoundType, LatLngType, PlaceType, QueryKeys } from '../utility/types';
-import { useQuery } from 'react-query';
 
 const Home: NextPage = () => {
 	const [type, setType] = useState('restaurants');
-	const [coordinates, setCoordinates] = useState<LatLngType | null>(null);
+	const [rating, setRating] = useState<number>();
+	const [childClicked, setChildClicked] = useState('');
+	const [coordinates, setCoordinates] = useState<LatLngType>();
 	const [bounds, setBounds] = useState<BoundType>({
 		ne: { lat: 12.838442, lng: 109.149359 },
 		sw: { lat: 11.847676, lng: 109.095887 }
 	});
-	const [childClicked, setChildClicked] = useState('');
+	const [filteredPlaces, setFilteredPlaces] = useState<PlaceType[]>([]);
 
 	const { sw, ne } = bounds;
 
@@ -28,7 +30,12 @@ const Home: NextPage = () => {
 		}
 	);
 
-	console.log(places);
+	useEffect(() => {
+		if (rating) {
+			const filtered = places?.filter((place) => Number(place.rating > rating));
+			setFilteredPlaces(filtered as PlaceType[]);
+		}
+	}, [rating, places]);
 
 	// Get User Location
 	useEffect(() => {
@@ -42,7 +49,15 @@ const Home: NextPage = () => {
 			<Header />
 			<Grid container spacing={3} style={{ width: '100%' }}>
 				<Grid item xs={12} md={4}>
-					<List isLoading={isLoading} places={places as PlaceType[]} childClicked={childClicked} />
+					<List
+						isLoading={isLoading}
+            places={filteredPlaces.length ? filteredPlaces : places as PlaceType[]}
+						childClicked={childClicked}
+						type={type}
+						setType={setType}
+						rating={rating as number}
+						setRating={setRating}
+					/>
 				</Grid>
 				<Grid
 					item
@@ -50,13 +65,13 @@ const Home: NextPage = () => {
 					md={8}
 					style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 				>
-					{/* <Map */}
-					{/* 	setChildClicked={setChildClicked} */}
-					{/* 	places={places} */}
-					{/* 	coordinates={coordinates} */}
-					{/* 	setCoordinates={setCoordinates} */}
-					{/* 	setBounds={setBounds} */}
-					{/* /> */}
+					<Map
+						setChildClicked={setChildClicked}
+            places={filteredPlaces.length ? filteredPlaces : places as PlaceType[]}
+						coordinates={coordinates as LatLngType}
+						setCoordinates={setCoordinates}
+						setBounds={setBounds}
+					/>
 				</Grid>
 			</Grid>
 		</>

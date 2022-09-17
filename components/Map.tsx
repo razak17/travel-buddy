@@ -10,11 +10,11 @@ import mapStyles from '../utility/mapStyles';
 import { BoundType, CoordinateType, LatLngType, PlaceType, WeatherData } from '../utility/types';
 
 interface MapProps {
-	coordinates: LatLngType | null;
+	coordinates: LatLngType;
 	weatherData?: WeatherData;
 	places: PlaceType[];
-	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType | null>>;
-	setBounds: React.Dispatch<React.SetStateAction<BoundType | null>>;
+	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType | undefined>>;
+	setBounds: React.Dispatch<React.SetStateAction<BoundType>>;
 	setChildClicked: React.Dispatch<React.SetStateAction<string>>;
 }
 
