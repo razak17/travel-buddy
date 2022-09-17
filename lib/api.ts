@@ -1,9 +1,5 @@
 import axios from 'axios';
-
-export type LatLngType = {
-	lat: number;
-	lng: number;
-};
+import { LatLngType } from '../utility/types';
 
 const baseUrl = 'https://travel-advisor.p.rapidapi.com';
 

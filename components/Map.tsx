@@ -7,36 +7,7 @@ import Image from 'next/image';
 import Marker from './Marker';
 import useStyles from '../styles/Map';
 import mapStyles from '../utility/mapStyles';
-import { PlaceType } from './List';
-import { LatLngType } from '../lib/api';
-
-type WeatherData = {
-	temperature: number;
-	description: string;
-	icon: string;
-	wind: number;
-	humidity: number;
-};
-
-export type BoundType = {
-	ne: LatLngType;
-	nw: LatLngType;
-	se: LatLngType;
-	sw: LatLngType;
-};
-
-export type CoordinateType = {
-	center: {
-		lat: number;
-		lng: number;
-	};
-	zoom: number;
-	bounds: BoundType;
-	size: {
-		width: number;
-		height: number;
-	};
-};
+import { BoundType, CoordinateType, LatLngType, PlaceType, WeatherData } from '../utility/types';
 
 interface MapProps {
 	coordinates: LatLngType | null;

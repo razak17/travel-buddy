@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
 import { Header } from '../components/Header';
-import { List, PlaceType } from '../components/List';
-import { BoundType, CoordinateType, Map } from '../components/Map';
+import { List } from '../components/List';
+import { Map } from '../components/Map';
 import { Grid } from '@mui/material';
 
 import { useEffect, useState } from 'react';
-import { getPlacesData, LatLngType } from '../lib/api';
+import { getPlacesData } from '../lib/api';
+import { BoundType, LatLngType, PlaceType } from '../utility/types';
 
 const Home: NextPage = () => {
 	const [type, setType] = useState('restaurants');

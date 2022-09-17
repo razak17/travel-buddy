@@ -14,8 +14,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import Image from 'next/image';
 import { RefObject } from 'react';
 
-import { PlaceType } from './List';
 import useStyles from '../styles/PlaceDetails';
+import { PlaceType } from '../utility/types';
 
 export const PlaceDetails = ({
 	place,

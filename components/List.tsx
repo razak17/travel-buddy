@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, RefObject, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
 	CircularProgress,
 	Grid,
@@ -11,45 +11,7 @@ import {
 import { PlaceDetails } from './PlaceDetails';
 
 import useStyles from '../styles/List';
-import { LatLngType } from '../lib/api';
-
-export type Photo = {
-	images: {
-		large: {
-			url: string;
-		};
-	};
-};
-
-export type Award = {
-	display_name: string;
-	images: {
-		small: string;
-	};
-};
-
-export type Cuisine = {
-	name: string;
-};
-
-export type PlaceType = {
-	name: string;
-	num_reviews: number;
-	rating: number;
-	ranking: number;
-	price_level: number;
-	phone: string;
-	photo: Photo;
-	address: string;
-	web_url: string;
-	website: string;
-	awards: Award[];
-	photos: object;
-	cuisine: Cuisine[];
-	location: LatLngType;
-	latitude: number;
-	longitude: number;
-};
+import { PlaceType } from '../utility/types';
 
 export const List = ({ places, childClicked }: { places: PlaceType[]; childClicked: string }) => {
 	const { classes } = useStyles();
