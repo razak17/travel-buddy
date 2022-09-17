@@ -17,7 +17,7 @@ import { RefObject } from 'react';
 import useStyles from '../styles/PlaceDetails';
 import { PlaceType } from '../utility/types';
 
-export const PlaceDetails = ({
+const PlaceDetails = ({
 	place,
 	selected,
 	refProp
@@ -102,3 +102,5 @@ export const PlaceDetails = ({
 		</Card>
 	);
 };
+
+export default PlaceDetails;

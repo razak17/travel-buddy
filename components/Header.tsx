@@ -4,14 +4,14 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import useStyles from '../styles/Header';
 
-export const Header = () => {
+const Header = () => {
 	const { classes } = useStyles();
 
 	return (
 		<AppBar position='static'>
 			<Toolbar className={classes.toolbar}>
 				<Typography variant='h5' className={classes.title}>
-					Travel Advisor
+					Travel Buddy
 				</Typography>
 				<Box display='flex'>
 					<Typography variant='h6' className={classes.title}>
@@ -21,10 +21,15 @@ export const Header = () => {
 						<div className={classes.searchIcon}>
 							<SearchIcon />
 						</div>
-						<InputBase placeholder='Search…' classes={{ root: classes.inputRoot, input: classes.inputInput }} />
+						<InputBase
+							placeholder='Search…'
+							classes={{ root: classes.inputRoot, input: classes.inputInput }}
+						/>
 					</div>
 				</Box>
 			</Toolbar>
 		</AppBar>
 	);
 };
+
+export default Header;

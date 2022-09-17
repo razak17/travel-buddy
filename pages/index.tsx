@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
-import { Header } from '../components/Header';
-import { List } from '../components/List';
-import { Map } from '../components/Map';
 import { Grid } from '@mui/material';
-
 import { useEffect, useState } from 'react';
+
+import Header from '../components/Header';
+import List from '../components/List';
+import Map from '../components/Map';
 import { getPlacesData } from '../lib/api';
 import { BoundType, LatLngType, PlaceType } from '../utility/types';
 
@@ -47,13 +47,13 @@ const Home: NextPage = () => {
 					md={8}
 					style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 				>
-					<Map
-						setChildClicked={setChildClicked}
-						places={places}
-						coordinates={coordinates}
-						setCoordinates={setCoordinates}
-						setBounds={setBounds}
-					/>
+					{/* <Map */}
+					{/* 	setChildClicked={setChildClicked} */}
+					{/* 	places={places} */}
+					{/* 	coordinates={coordinates} */}
+					{/* 	setCoordinates={setCoordinates} */}
+					{/* 	setBounds={setBounds} */}
+					{/* /> */}
 				</Grid>
 			</Grid>
 		</>

@@ -18,13 +18,7 @@ interface MapProps {
 	setChildClicked: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Map = ({
-	coordinates,
-	setCoordinates,
-	setBounds,
-	setChildClicked,
-	places
-}: MapProps) => {
+const Map = ({ coordinates, setCoordinates, setBounds, setChildClicked, places }: MapProps) => {
 	const matches = useMediaQuery('(min-width:600px)');
 	const { classes } = useStyles();
 
@@ -77,3 +71,5 @@ export const Map = ({
 		</div>
 	);
 };
+
+export default Map;

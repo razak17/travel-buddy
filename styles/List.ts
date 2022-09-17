@@ -6,6 +6,9 @@ export default makeStyles()((theme) => ({
 		minWidth: 120,
 		marginBottom: '30px'
 	},
+	formBox: {
+		display: 'flex'
+	},
 	selectEmpty: {
 		marginTop: theme.spacing(2)
 	},
