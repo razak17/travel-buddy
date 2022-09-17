@@ -10,3 +10,6 @@
 
 - Other Dependencies
   yarn add @react-google-maps/api axios google-map-react react-icons
+
+### Todos
+  - Get Map working (API Key)
