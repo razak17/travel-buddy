@@ -1,10 +1,11 @@
 import { AppBar, Toolbar, Box, Typography, InputBase } from '@mui/material';
-// import { Autocomplete } from '@react-google-maps/api';
+import { Autocomplete } from '@react-google-maps/api';
 import SearchIcon from '@mui/icons-material/Search';
 
 import useStyles from '../styles/Header';
 
-const Header = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Header = ({ onLoad, onPlaceChanged }: { onLoad: any; onPlaceChanged: any }) => {
 	const { classes } = useStyles();
 
 	return (
@@ -17,15 +18,17 @@ const Header = () => {
 					<Typography variant='h6' className={classes.title}>
 						Explore new places
 					</Typography>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
+					<Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder='Search…'
+								classes={{ root: classes.inputRoot, input: classes.inputInput }}
+							/>
 						</div>
-						<InputBase
-							placeholder='Search…'
-							classes={{ root: classes.inputRoot, input: classes.inputInput }}
-						/>
-					</div>
+					</Autocomplete>
 				</Box>
 			</Toolbar>
 		</AppBar>

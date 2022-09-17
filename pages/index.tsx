@@ -19,14 +19,19 @@ const Home: NextPage = () => {
 		sw: { lat: 11.847676, lng: 109.095887 }
 	});
 	const [filteredPlaces, setFilteredPlaces] = useState<PlaceType[]>([]);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const [autocomplete, setAutocomplete] = useState<any>(null);
 
 	const { sw, ne } = bounds;
 
 	const { data: places, isLoading } = useQuery(
-		[QueryKeys.PLACES_DATA],
+		[QueryKeys.PLACES_DATA, bounds],
 		() => getPlacesData(type, sw, ne),
 		{
-			initialData: []
+			initialData: [],
+			onSuccess: (data) => {
+				data?.filter((place) => place.name && place.num_reviews > 0);
+			}
 		}
 	);
 
@@ -44,14 +49,25 @@ const Home: NextPage = () => {
 		});
 	}, []);
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const onLoad = (autoC: any) => setAutocomplete(autoC);
+
+	const onPlaceChanged = () => {
+		const lat = autocomplete?.getPlace().geometry.location.lat();
+		const lng = autocomplete?.getPlace().geometry.location.lng();
+
+		setCoordinates({ lat, lng });
+	};
+
 	return (
 		<>
-			<Header />
+			<Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+
 			<Grid container spacing={3} style={{ width: '100%' }}>
 				<Grid item xs={12} md={4}>
 					<List
 						isLoading={isLoading}
-            places={filteredPlaces.length ? filteredPlaces : places as PlaceType[]}
+						places={filteredPlaces.length ? filteredPlaces : (places as PlaceType[])}
 						childClicked={childClicked}
 						type={type}
 						setType={setType}
@@ -67,7 +83,7 @@ const Home: NextPage = () => {
 				>
 					<Map
 						setChildClicked={setChildClicked}
-            places={filteredPlaces.length ? filteredPlaces : places as PlaceType[]}
+						places={filteredPlaces.length ? filteredPlaces : (places as PlaceType[])}
 						coordinates={coordinates as LatLngType}
 						setCoordinates={setCoordinates}
 						setBounds={setBounds}
