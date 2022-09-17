@@ -13,6 +13,7 @@ const Home: NextPage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [coordinates, setCoordinates] = useState<LatLngType | null>(null);
 	const [bounds, setBounds] = useState<BoundType | null>(null);
+	const [childClicked, setChildClicked] = useState('');
 
 	// Get User Location
 	useEffect(() => {
@@ -37,10 +38,21 @@ const Home: NextPage = () => {
 			<Header />
 			<Grid container spacing={3} style={{ width: '100%' }}>
 				<Grid item xs={12} md={4}>
-					<List places={places} />
+					<List places={places} childClicked={childClicked} />
 				</Grid>
-				<Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-					<Map places={places} coordinates={coordinates} setCoordinates={setCoordinates} setBounds={setBounds} />
+				<Grid
+					item
+					xs={12}
+					md={8}
+					style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+				>
+					<Map
+						setChildClicked={setChildClicked}
+						places={places}
+						coordinates={coordinates}
+						setCoordinates={setCoordinates}
+						setBounds={setBounds}
+					/>
 				</Grid>
 			</Grid>
 		</>

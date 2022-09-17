@@ -44,10 +44,16 @@ interface MapProps {
 	places: PlaceType[];
 	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType | null>>;
 	setBounds: React.Dispatch<React.SetStateAction<BoundType | null>>;
-	setChildClicked?: React.Dispatch<React.SetStateAction<PlaceType | null>>;
+	setChildClicked: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Map = ({ coordinates, setCoordinates, setBounds, places }: MapProps) => {
+export const Map = ({
+	coordinates,
+	setCoordinates,
+	setBounds,
+	setChildClicked,
+	places
+}: MapProps) => {
 	const matches = useMediaQuery('(min-width:600px)');
 	const { classes } = useStyles();
 
@@ -65,7 +71,7 @@ export const Map = ({ coordinates, setCoordinates, setBounds, places }: MapProps
 				margin={[50, 50, 50, 50]}
 				options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
 				onChange={handleChange}
-				onChildClick={''}
+				onChildClick={(child: string) => setChildClicked(child)}
 			>
 				{places.length &&
 					places.map((place, i) => (

@@ -1,5 +1,13 @@
-import React, { useState, useEffect, createRef } from 'react';
-import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import React, { useState, useEffect, createRef, RefObject, useRef } from 'react';
+import {
+	CircularProgress,
+	Grid,
+	Typography,
+	InputLabel,
+	MenuItem,
+	FormControl,
+	Select
+} from '@mui/material';
 import { PlaceDetails } from './PlaceDetails';
 
 import useStyles from '../styles/List';
@@ -33,7 +41,7 @@ export type PlaceType = {
 	phone: string;
 	photo: Photo;
 	address: string;
-	webUrl: string;
+	web_url: string;
 	website: string;
 	awards: Award[];
 	photos: object;
@@ -43,10 +51,10 @@ export type PlaceType = {
 	longitude: number;
 };
 
-export const List = ({ places }: { places: PlaceType[] }) => {
-	const [refs, setlRefs] = useState([]);
+export const List = ({ places, childClicked }: { places: PlaceType[]; childClicked: string }) => {
 	const { classes } = useStyles();
 	const [type, setType] = useState('restaurants');
+  const placeRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<div className={classes.container}>
@@ -76,8 +84,8 @@ export const List = ({ places }: { places: PlaceType[] }) => {
 			</FormControl>
 			<Grid container spacing={3} className={classes.list}>
 				{places?.map((place, i) => (
-					<Grid key={`place-item-${i}`} item xs={12}>
-						<PlaceDetails place={place} />
+					<Grid ref={placeRef} key={`place-item-${i}`} item xs={12}>
+						<PlaceDetails selected={Number(childClicked) === i} refProp={placeRef} place={place} />
 					</Grid>
 				))}
 			</Grid>
