@@ -20,9 +20,13 @@ const Home: NextPage = () => {
 
 	const { sw, ne } = bounds;
 
-	const { data: places } = useQuery([QueryKeys.PLACES_DATA], () => getPlacesData(type, sw, ne), {
-		initialData: []
-	});
+	const { data: places, isLoading } = useQuery(
+		[QueryKeys.PLACES_DATA],
+		() => getPlacesData(type, sw, ne),
+		{
+			initialData: []
+		}
+	);
 
 	console.log(places);
 
@@ -38,7 +42,7 @@ const Home: NextPage = () => {
 			<Header />
 			<Grid container spacing={3} style={{ width: '100%' }}>
 				<Grid item xs={12} md={4}>
-					<List places={places as PlaceType[]} childClicked={childClicked} />
+					<List isLoading={isLoading} places={places as PlaceType[]} childClicked={childClicked} />
 				</Grid>
 				<Grid
 					item
