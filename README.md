@@ -4,10 +4,10 @@
 First, run the development server:
 
 npm run dev
-# or
+### or
 yarn dev
 
-### Technologies
+## Technologies
 - React
 - Material UI
 - Google Maps API
