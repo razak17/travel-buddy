@@ -18,7 +18,7 @@ interface ListProps {
 	type: string;
 	setType: Dispatch<SetStateAction<string>>;
 	rating: number;
-	setRating: Dispatch<SetStateAction<number | undefined>>;
+	setRating: Dispatch<SetStateAction<number>>;
 }
 
 const List = ({ places, childClicked, isLoading, type, setType, rating, setRating }: ListProps) => {

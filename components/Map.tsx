@@ -7,18 +7,18 @@ import Image from 'next/image';
 import Marker from './Marker';
 import useStyles from '../styles/Map';
 import mapStyles from '../utility/mapStyles';
-import { BoundType, CoordinateType, LatLngType, PlaceType, WeatherData } from '../utility/types';
+import { BoundType, CoordinateType, LatLngType, PlaceType, WeatherType } from '../utility/types';
 
 interface MapProps {
 	coordinates: LatLngType;
-	weatherData?: WeatherData;
+	weatherData: WeatherType;
 	places: PlaceType[];
-	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType | undefined>>;
+	setCoordinates: React.Dispatch<React.SetStateAction<LatLngType>>;
 	setBounds: React.Dispatch<React.SetStateAction<BoundType>>;
 	setChildClicked: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Map = ({ coordinates, setCoordinates, setBounds, setChildClicked, places }: MapProps) => {
+const Map = ({ coordinates, setCoordinates, setBounds, setChildClicked, places, weatherData }: MapProps) => {
 	const matches = useMediaQuery('(min-width:600px)');
 	const { classes } = useStyles();
 
@@ -67,6 +67,12 @@ const Map = ({ coordinates, setCoordinates, setBounds, setChildClicked, places }
 							)}
 						</Marker>
 					))}
+        {weatherData?.list?.length && weatherData.list.map((data, i) => (
+          <Marker key={i} lat={data.coord.lat} lng={data.coord.lon}>
+            <Image src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} height="70px" />
+          </Marker>
+        ))}
+
 			</GoogleMapReact>
 		</div>
 	);

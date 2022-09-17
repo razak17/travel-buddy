@@ -41,9 +41,10 @@ export type PlaceType = {
 	longitude: number;
 };
 
-export type WeatherData = {
+export type WeatherType = {
 	temperature: number;
 	description: string;
+  coord: LatLngType;
 	icon: string;
 	wind: number;
 	humidity: number;
@@ -71,5 +72,7 @@ export type CoordinateType = {
 
 /* eslint-disable no-unused-vars */
 export enum QueryKeys {
-	PLACES_DATA = 'PlacesData'
+	PLACES_DATA = 'PlacesData',
+	WEATHER_DATA = 'WeatherData'
+	CITY_DATA = 'CityData'
 }

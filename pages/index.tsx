@@ -6,14 +6,18 @@ import { useQuery } from 'react-query';
 import Header from '../components/Header';
 import List from '../components/List';
 import Map from '../components/Map';
-import { getPlacesData } from '../lib/api';
-import { BoundType, LatLngType, PlaceType, QueryKeys } from '../utility/types';
+import { getCity, getPlacesData, getWeatherData } from '../lib/api';
+import { BoundType, LatLngType, PlaceType, QueryKeys, WeatherType } from '../utility/types';
 
 const Home: NextPage = () => {
 	const [type, setType] = useState('restaurants');
-	const [rating, setRating] = useState<number>();
+	const [rating, setRating] = useState<number>(4);
 	const [childClicked, setChildClicked] = useState('');
-	const [coordinates, setCoordinates] = useState<LatLngType>();
+	const [city, setCity] = useState('');
+	const [coordinates, setCoordinates] = useState<LatLngType>({
+		lat: 40.714224,
+		lng: -73.961452
+	});
 	const [bounds, setBounds] = useState<BoundType>({
 		ne: { lat: 12.838442, lng: 109.149359 },
 		sw: { lat: 11.847676, lng: 109.095887 }
@@ -22,11 +26,9 @@ const Home: NextPage = () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const [autocomplete, setAutocomplete] = useState<any>(null);
 
-	const { sw, ne } = bounds;
-
 	const { data: places, isLoading } = useQuery(
-		[QueryKeys.PLACES_DATA, bounds],
-		() => getPlacesData(type, sw, ne),
+		[QueryKeys.PLACES_DATA, bounds, type],
+		() => getPlacesData(type, bounds.sw as LatLngType, bounds.ne as LatLngType),
 		{
 			initialData: [],
 			onSuccess: (data) => {
@@ -34,6 +36,24 @@ const Home: NextPage = () => {
 			}
 		}
 	);
+
+	const { data: cityData } = useQuery(
+		[QueryKeys.CITY_DATA, city],
+		() => getCity({ lat: coordinates?.lat as number, lng: coordinates?.lng as number }),
+		{
+			onSuccess: (data) => {
+				setCity(data);
+			}
+		}
+	);
+
+	const { data: weatherData } = useQuery(
+		[QueryKeys.WEATHER_DATA, city],
+		() => getWeatherData(coordinates.lat as number, coordinates.lng as number),
+	);
+
+	console.log({ cityData });
+	console.log({ weatherData });
 
 	useEffect(() => {
 		if (rating) {
@@ -61,7 +81,7 @@ const Home: NextPage = () => {
 
 	return (
 		<>
-			<Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+			{/* <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} /> */}
 
 			<Grid container spacing={3} style={{ width: '100%' }}>
 				<Grid item xs={12} md={4}>
@@ -81,13 +101,14 @@ const Home: NextPage = () => {
 					md={8}
 					style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 				>
-					<Map
-						setChildClicked={setChildClicked}
-						places={filteredPlaces.length ? filteredPlaces : (places as PlaceType[])}
-						coordinates={coordinates as LatLngType}
-						setCoordinates={setCoordinates}
-						setBounds={setBounds}
-					/>
+					{/* <Map */}
+					{/* 	setChildClicked={setChildClicked} */}
+					{/* 	places={filteredPlaces.length ? filteredPlaces : (places as PlaceType[])} */}
+					{/* 	coordinates={coordinates as LatLngType} */}
+					{/* 	setCoordinates={setCoordinates} */}
+					{/* 	setBounds={setBounds} */}
+					{/* 	weatherData={weatherData as WeatherType} */}
+					{/* /> */}
 				</Grid>
 			</Grid>
 		</>
